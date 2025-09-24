@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>The Trenches</title>
+<title>The Crib - Generate Liquidity, Trade Memes, Repeat</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="style.css" />
 </head>
@@ -11,7 +11,10 @@
 
 <!-- THEME TOGGLE -->
 <div class="theme-toggle">
-<button id="modeToggle">🌙 </button>
+  <button id="modeToggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+    <span class="theme-icon">🌙</span>
+    <span class="theme-text">Dark</span>
+  </button>
 </div>
 
 <!-- HERO -->
@@ -19,7 +22,7 @@
   <div class="hero-container">
     <!-- Title -->
     <h1 class="hero-title">
-      &lt;<span class="text-black dark:text-white">The</span><span class="text-green-500">Crib</span> /&gt;
+      &lt;<span class="text-gray-900 dark:text-white">The</span><span class="text-green-500">Crib</span> /&gt;
     </h1>
     
     <!-- Description -->
@@ -38,7 +41,7 @@
 <div class="divider">// ::::::::::::::::::::::::::::::::::::::::::</div>
 
 <!-- ABOUT -->
-<section id="about" class="text-center px-4">
+<section id="about" class="text-center px-4 section-spacing">
 <h2 class="section-title">// About The Crib</h2>
 <p class="text-lg max-w-3xl mx-auto leading-relaxed text-gray-600 dark:text-gray-300">
 The Crib is a web3 based community for all things Crypto, we bring you opportunities, help meme traders upskill and max out in the fast paced market, Hosted by
@@ -50,7 +53,7 @@ The Crib is a web3 based community for all things Crypto, we bring you opportuni
 <div class="divider">// ::::::::::::::::::::::::::::::::::::::::::</div>
 
 <!-- COURSE - MEME TRADING -->
-<section id="course" class="text-center max-w-6xl mx-auto px-4">
+<section id="course" class="text-center max-w-6xl mx-auto px-4 section-spacing">
 <h2 class="section-title">// Free Meme Trading Masterclass</h2>
 
 <!-- Video Grid -->
@@ -116,7 +119,7 @@ Join The Crib to be reminder →
 
 
 <!--web3 jobs -->
-<section id="course" class="text-center max-w-6xl mx-auto px-4">
+<section id="web3-jobs" class="text-center max-w-6xl mx-auto px-4 section-spacing">
 <h2 class="section-title">// Generate Liquidity from web3 jobs </h2>
 
 <!--Video grid-->
@@ -165,7 +168,7 @@ Follow paula to stay Updated →
 <div class="divider">// ::::::::::::::::::::::::::::::::::::::::::</div>
 
 <!-- CONNECT -->
-<section id="connect" class="text-center px-4">
+<section id="connect" class="text-center px-4 section-spacing">
 <h2 class="section-title">connect.join()</h2>
 <div class="flex flex-col md:flex-row justify-center gap-6 mt-6">
 <a href="https://t.me/theecrib" target="_blank" class="cta-btn">Join Telegram</a>
@@ -186,17 +189,64 @@ Follow paula to stay Updated →
 <script>
 const modeToggle = document.getElementById("modeToggle");
 const body = document.body;
+const themeIcon = document.querySelector(".theme-icon");
+const themeText = document.querySelector(".theme-text");
 
-modeToggle.addEventListener("click", () => {
-body.classList.toggle("dark-mode");
-body.classList.toggle("light-mode");
-
-if (body.classList.contains("dark-mode")) {
-modeToggle.textContent = "☀️";
+// Set initial theme from localStorage or default to light
+const savedTheme = localStorage.getItem('theme') || 'light';
+if (savedTheme === 'dark') {
+  body.classList.add('dark-mode');
+  body.classList.remove('light-mode');
+  updateToggleButton('dark');
 } else {
-modeToggle.textContent = "🌙";
+  body.classList.add('light-mode');
+  body.classList.remove('dark-mode');
+  updateToggleButton('light');
 }
+
+// Toggle theme on button click
+modeToggle.addEventListener("click", () => {
+  const currentTheme = body.classList.contains('dark-mode') ? 'dark' : 'light';
+  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+  
+  if (newTheme === 'dark') {
+    body.classList.add('dark-mode');
+    body.classList.remove('light-mode');
+  } else {
+    body.classList.add('light-mode');
+    body.classList.remove('dark-mode');
+  }
+  
+  localStorage.setItem('theme', newTheme);
+  updateToggleButton(newTheme);
 });
+
+// Update button text and icon based on theme
+function updateToggleButton(theme) {
+  if (theme === 'dark') {
+    themeIcon.textContent = '☀️';
+    themeText.textContent = 'Light';
+    modeToggle.setAttribute('aria-label', 'Switch to light mode');
+  } else {
+    themeIcon.textContent = '🌙';
+    themeText.textContent = 'Dark';
+    modeToggle.setAttribute('aria-label', 'Switch to dark mode');
+  }
+}
+
+// Respect system preference if no saved theme
+if (!localStorage.getItem('theme')) {
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const systemTheme = prefersDark ? 'dark' : 'light';
+  if (systemTheme === 'dark') {
+    body.classList.add('dark-mode');
+    body.classList.remove('light-mode');
+  } else {
+    body.classList.add('light-mode');
+    body.classList.remove('dark-mode');
+  }
+  updateToggleButton(systemTheme);
+}
 </script>
 </body>
 </html>
