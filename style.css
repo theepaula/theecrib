@@ -3,6 +3,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -14,6 +18,7 @@ body {
   transition: background 0.3s ease, color 0.3s ease;
   line-height: 1.6;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 section {
@@ -123,21 +128,37 @@ text-transform: uppercase;
 /* Theme Toggle */
 .theme-toggle {
   position: fixed;
-  top: 1rem; /* Original position - mobile will override */
-  right: 1rem; /* Original position - mobile will override */
+  top: 1rem;
+  right: 1rem;
   z-index: 1000;
 }
 
-.theme-toggle button {
-  background: #f3f4f6;
-  border: 1px solid #d1d5db;
-  padding: 0.5rem 1rem; /* Original padding - mobile will override */
-  border-radius: 0.5rem;
+.theme-toggle-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(229, 231, 235, 0.5);
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
   cursor: pointer;
+  font-family: var(--font-mono);
   font-size: 0.8rem;
   min-height: 44px;
   min-width: 44px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.theme-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.95);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.theme-icon {
+  font-size: 1rem;
 }
 
 /* DARK MODE */
@@ -193,10 +214,14 @@ background-color: #22c55e;
 background-color: #16a34a;
 }
 
-.dark-mode .theme-toggle button {
-background: #1f2937;
-border: 1px solid #374151;
-color: #f9fafb;
+.dark-mode .theme-toggle-btn {
+  background: rgba(31, 41, 55, 0.9);
+  border: 1px solid rgba(55, 65, 81, 0.5);
+  color: #f9fafb;
+}
+
+.dark-mode .theme-toggle-btn:hover {
+  background: rgba(31, 41, 55, 0.95);
 }
 
 .dark-mode h1 span.text-black {
@@ -216,6 +241,7 @@ color: #f9fafb;
   justify-content: center;
   text-align: center;
   padding: 1rem;
+  margin-bottom: 8rem; /* Mobile spacing */
 }
 
 .hero-container {
@@ -277,6 +303,14 @@ color: #f9fafb;
 .hero-button:hover {
   background-color: #16a34a;
   transform: translateY(-1px);
+}
+
+/* ==========================================
+   SECTION SPACING
+   ========================================== */
+.section-spacing {
+  padding-top: 8rem; /* Mobile spacing */
+  padding-bottom: 4rem;
 }
 
 /* ==========================================
@@ -444,6 +478,7 @@ color: #f9fafb;
   /* Hero responsive styles */
   .hero-section {
     padding: 2rem;
+    margin-bottom: 0; /* Remove mobile spacing */
   }
   
   .hero-title {
@@ -458,6 +493,12 @@ color: #f9fafb;
   .hero-button {
     font-size: 1.1rem;
     padding: 1rem 2rem;
+  }
+  
+  /* Section spacing */
+  .section-spacing {
+    padding-top: 6rem; /* Desktop spacing */
+    padding-bottom: 4rem;
   }
   
   /* Restore original desktop spacing */
